@@ -37,6 +37,7 @@ end
 bash "build_and_install_mecab_ruby_gem" do
   cwd ::File.dirname(mecab_ruby_src_filepath)
   code <<-EOH
+    source /etc/profile.d/rbenv.sh &&
     tar zxf #{::File.basename(mecab_ruby_src_filepath)} -C #{::File.dirname(mecab_ruby_src_filepath)} &&
     cd mecab-ruby-#{node['mecab']['ruby']['version']} &&
     gem build mecab-ruby.gemspec &&
