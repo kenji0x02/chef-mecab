@@ -27,6 +27,11 @@
 mecab_src_url = "https://mecab.googlecode.com/files/mecab-#{node['mecab']['version']}.tar.gz"
 mecab_src_filepath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/mecab-#{node['mecab']['version']}.tar.gz"
 
+package "gcc-c++" do
+  action :install
+  not_if "which g++"
+end
+
 remote_file mecab_src_filepath do
   source mecab_src_url
   checksum node['mecab']['checksum']
