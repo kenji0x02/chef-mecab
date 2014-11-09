@@ -51,7 +51,7 @@ bash "compile_mecab_source" do
 end
 
 # Make sure libmecab.so can be linked
-if node['platform'] == 'ubuntu'
+if platform?('ubuntu', 'centos')
   execute 'ldconfig'
 end
 
