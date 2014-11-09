@@ -25,14 +25,16 @@
 #
 
 default['mecab']['version'] = '0.996'
-# SHA256
+# SHA256(shasum -a 256 mecab-ruby-0.996.tar.gz)
 default['mecab']['checksum'] = 'e073325783135b72e666145c781bb48fada583d5224fb2490fb6c1403ba69c59'
 
 default['mecab']['ipadic']['version'] = '2.7.0-20070801'
-default['mecab']['ipadic']['checksum'] = '0d9d021853ba4bb4adfa782ea450e55bfe1a229b'
+# SHA256
+default['mecab']['ipadic']['checksum'] = 'b62f527d881c504576baed9c6ef6561554658b175ce6ae0096a60307e49e3523'
 
 default['mecab']['additonal_dictionary_path'] = nil
 
 default['mecab']['ruby']['version'] = '0.996'
 default['mecab']['ruby']['gem_version'] = '0.99'
-default['mecab']['ruby']['checksum'] = '5730d9667118d79ad6f2c49f45476d0874718d10'
+# SHA256
+default['mecab']['ruby']['checksum'] = 'b75e9731e717cec1c261a27d06c4f7baa696cf2fd4e5e3158df5f8fd65107285'
