@@ -35,6 +35,7 @@ remote_file mecab_ruby_src_filepath do
 end
 
 bash "build_and_install_mecab_ruby_gem" do
+  not_if "source /etc/profile.d/rbenv.sh; bundle show mecab-ruby"
   cwd ::File.dirname(mecab_ruby_src_filepath)
   code <<-EOH
     source /etc/profile.d/rbenv.sh &&
@@ -42,5 +43,14 @@ bash "build_and_install_mecab_ruby_gem" do
     cd mecab-ruby-#{node['mecab']['ruby']['version']} &&
     gem build mecab-ruby.gemspec &&
     gem install mecab-ruby-#{node['mecab']['ruby']['gem_version']}.gem
+  EOH
+end
+
+bash "change group and permission for gem install" do
+  not_if "source /etc/profile.d/rbenv.sh; bundle show mecab-ruby"
+  code <<-EOH
+    source /etc/profile.d/rbenv.sh
+    sudo chmod -R 775 `bundle show mecab-ruby`
+    sudo chown -R :mecab `bundle show mecab-ruby`
   EOH
 end
