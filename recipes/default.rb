@@ -39,6 +39,7 @@ remote_file mecab_src_filepath do
 end
 
 bash "compile_mecab_source" do
+  not_if "ls /usr/local/bin/mecab"
   cwd ::File.dirname(mecab_src_filepath)
   code <<-EOH
     tar zxf #{::File.basename(mecab_src_filepath)} -C #{::File.dirname(mecab_src_filepath)} &&

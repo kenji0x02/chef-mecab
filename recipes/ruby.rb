@@ -35,7 +35,8 @@ remote_file mecab_ruby_src_filepath do
 end
 
 bash "build_and_install_mecab_ruby_gem" do
-  not_if "source /etc/profile.d/rbenv.sh; bundle show mecab-ruby"
+  # `bundle show mecab-ruby`はGemfileが存在するディレクトリでのみ有効なので`gem env gemdir`で直接gemのディレクトリを調べる
+  not_if "source /etc/profile.d/rbenv.sh; ls `gem env gemdir`/gems/mecab-ruby-#{node['mecab']['ruby']['gem_version']}"
   cwd ::File.dirname(mecab_ruby_src_filepath)
   code <<-EOH
     source /etc/profile.d/rbenv.sh &&
@@ -46,11 +47,15 @@ bash "build_and_install_mecab_ruby_gem" do
   EOH
 end
 
+group node['mecab']['ruby']['group'] do
+  action :create
+end
+
 bash "change group and permission for gem install" do
-  not_if "source /etc/profile.d/rbenv.sh; bundle show mecab-ruby"
+  only_if "source /etc/profile.d/rbenv.sh; ls `gem env gemdir`/gems/mecab-ruby-#{node['mecab']['ruby']['gem_version']}"
   code <<-EOH
-    source /etc/profile.d/rbenv.sh
-    sudo chmod -R 775 `source /etc/profile.d/rbenv.sh; bundle show mecab-ruby`
-    sudo chown -R :mecab `source /etc/profile.d/rbenv.sh; bundle show mecab-ruby`
+    source /etc/profile.d/rbenv.sh &&
+    chmod -R 775 `gem env gemdir`/gems/mecab-ruby-#{node['mecab']['ruby']['gem_version']}
+    chown -R :#{node['mecab']['ruby']['group']} `gem env gemdir`/gems/mecab-ruby-#{node['mecab']['ruby']['gem_version']}
   EOH
 end

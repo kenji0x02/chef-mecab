@@ -38,3 +38,5 @@ default['mecab']['ruby']['version'] = '0.996'
 default['mecab']['ruby']['gem_version'] = '0.99'
 # SHA256
 default['mecab']['ruby']['checksum'] = 'b75e9731e717cec1c261a27d06c4f7baa696cf2fd4e5e3158df5f8fd65107285'
+# mecab-rubyを使うグループ名
+default['mecab']['ruby']['group'] = 'mecab'
