@@ -49,6 +49,13 @@ end
 
 group node['mecab']['ruby']['group'] do
   action :create
+  append true
+end
+
+group node['mecab']['ruby']['group'] do
+  action [:modify]
+  members node['mecab']['ruby']['members']
+  append true
 end
 
 bash "change group and permission for gem install" do
