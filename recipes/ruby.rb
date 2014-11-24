@@ -50,7 +50,7 @@ bash "change group and permission for gem install" do
   not_if "source /etc/profile.d/rbenv.sh; bundle show mecab-ruby"
   code <<-EOH
     source /etc/profile.d/rbenv.sh
-    sudo chmod -R 775 `bundle show mecab-ruby`
-    sudo chown -R :mecab `bundle show mecab-ruby`
+    sudo chmod -R 775 `source /etc/profile.d/rbenv.sh; bundle show mecab-ruby`
+    sudo chown -R :mecab `source /etc/profile.d/rbenv.sh; bundle show mecab-ruby`
   EOH
 end
